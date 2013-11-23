@@ -1,0 +1,16 @@
+.DS_Store
+*.swp
+*.Trashes
+ 
+# All platforms:
+Library
+Temp
+*.csproj
+*.pidb
+*.unityproj
+*.sln
+*.suo
+*.userprefs
+obj
+packages
+packages.meta

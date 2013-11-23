@@ -1,0 +1,7 @@
+{ 
+  "infect": "HoradricCube/Assets",
+  "with": {
+    "invisibledrygoods/RequireUnity": "HEAD",
+    "invisibledrygoods/GivenWhenUnity": "HEAD"
+  }
+}
