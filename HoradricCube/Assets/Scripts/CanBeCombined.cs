@@ -6,19 +6,4 @@ using Require;
 public class CanBeCombined : MonoBehaviour
 {
     public string ingredientName;
-
-    void Awake()
-    {
-        
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

@@ -19,6 +19,15 @@ public class CanCombineContentsTest : TestBehaviour
             .Because("it should follow recipes");
 
         Given("it can combine its contents")
+            .And("it has a recipe for extra salty pork")
+            .And("it contains 'salt'")
+            .And("it contains 'salt'")
+            .And("it contains 'pork'")
+            .When("its contents are combined")
+            .Then("it should contain 'extra salty pork'")
+            .Because("multiples of the same ingredient should be allowed");
+
+        Given("it can combine its contents")
             .And("it has a recipe for salt pork")
             .And("it contains 'salt'")
             .And("it contains 'pork'")
@@ -68,6 +77,19 @@ public class CanCombineContentsTest : TestBehaviour
         saltPork.transform.Require<CanBeCombined>().ingredientName = "salt pork";
 
         List<string> ingredients = new List<string>();
+        ingredients.Add("salt");
+        ingredients.Add("pork");
+
+        it.recipes.Add(new Recipe(ingredients, saltPork.transform));
+    }
+
+    public void ItHasARecipeForExtraSaltyPork()
+    {
+        GameObject saltPork = new GameObject();
+        saltPork.transform.Require<CanBeCombined>().ingredientName = "extra salty pork";
+
+        List<string> ingredients = new List<string>();
+        ingredients.Add("salt");
         ingredients.Add("salt");
         ingredients.Add("pork");
 

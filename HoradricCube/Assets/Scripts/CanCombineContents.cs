@@ -22,20 +22,41 @@ public class CanCombineContents : MonoBehaviour
 
     public void Combine()
     {
-    }
+        List<string> contents = new List<string>();
 
-    void Awake()
-    {
-        
-    }
+        foreach (CanBeCombined content in GetComponentsInChildren<CanBeCombined>())
+        {
+            contents.Add(content.ingredientName);
+        }
 
-    void Start()
-    {
-        
-    }
+        foreach (Recipe recipe in recipes)
+        {
+            bool missingIngredient = false;
+            List<string> accountedFor = new List<string>(contents);
 
-    void Update()
-    {
-        
+            foreach (string ingredient in recipe.ingredients)
+            {
+                if (accountedFor.Contains(ingredient))
+                {
+                    accountedFor.Remove(ingredient);
+                }
+                else
+                {
+                    missingIngredient = true;
+                    break;
+                }
+            }
+
+            if (!missingIngredient && accountedFor.Count == 0)
+            {
+                foreach (CanBeCombined content in GetComponentsInChildren<CanBeCombined>())
+                {
+                    Destroy(content.gameObject);
+                }
+
+                (Instantiate(recipe.result, transform.position, Quaternion.identity) as Transform).parent = transform;
+                return;
+            }
+        }
     }
 }
