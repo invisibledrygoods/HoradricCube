@@ -85,6 +85,7 @@ public class StoresContentsInAGridTest : TestBehaviour
         item.localScale = new Vector3(width, height, 1.0f);
         success = it.TryToAdd(item);
         addedAt = item.localPosition;
+        Destroy(item.gameObject);
     }
 
     public void ItShouldBeAddedAt____(float x, float y)
