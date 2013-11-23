@@ -27,7 +27,7 @@ Add the ingredients to the oven
     pork.Require<CanBeCombined>().ingredientName = "pork";
     pork.parent = oven;
     
-And bake for 500 hours
+Bake for 500 hours
 
     oven.Combine();
     oven.GetComponentInChildren<CanBeCombined>().ingredientName; // => salt pork!
