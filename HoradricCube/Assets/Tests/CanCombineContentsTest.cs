@@ -75,25 +75,14 @@ public class CanCombineContentsTest : TestBehaviour
     {
         GameObject saltPork = new GameObject();
         saltPork.transform.Require<CanBeCombined>().ingredientName = "salt pork";
-
-        List<string> ingredients = new List<string>();
-        ingredients.Add("salt");
-        ingredients.Add("pork");
-
-        it.recipes.Add(new Recipe(ingredients, saltPork.transform));
+        it.recipes.Add(new Recipe(new[] { "salt", "pork" }, saltPork.transform));
     }
 
     public void ItHasARecipeForExtraSaltyPork()
     {
         GameObject saltPork = new GameObject();
         saltPork.transform.Require<CanBeCombined>().ingredientName = "extra salty pork";
-
-        List<string> ingredients = new List<string>();
-        ingredients.Add("salt");
-        ingredients.Add("salt");
-        ingredients.Add("pork");
-
-        it.recipes.Add(new Recipe(ingredients, saltPork.transform));
+        it.recipes.Add(new Recipe(new [] { "salt", "salt", "pork" }, saltPork.transform));
     }
 
     public void ItContains__(string ingredient)

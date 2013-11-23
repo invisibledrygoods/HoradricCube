@@ -6,10 +6,10 @@ using Require;
 [Serializable]
 public class Recipe
 {
-    public List<string> ingredients;
+    public string[] ingredients;
     public Transform result;
 
-    public Recipe(List<string> ingredients, Transform result)
+    public Recipe(string[] ingredients, Transform result)
     {
         this.ingredients = ingredients;
         this.result = result;
