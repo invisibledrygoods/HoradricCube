@@ -34,7 +34,6 @@ public class StoresContentsInAGridTest : TestBehaviour
             .Because("items cannot be placed in a full inventory");
 
         Given("it stores its contents in a 2 by 2 grid")
-            .And("shuffle is turned on")
             .And("there is a 1 by 1 item at 0.5 0.5")
             .And("there is a 1 by 1 item at 1.5 0.5")
             .When("you try to add a 1 by 2 item")
@@ -42,6 +41,7 @@ public class StoresContentsInAGridTest : TestBehaviour
             .Because("items cannot be placed if shuffle is off and no empty space fits their shape");
 
         Given("it stores its contents in a 2 by 2 grid")
+            .And("shuffle is turned on")
             .And("there is a 1 by 1 item at 0.5 0.5")
             .And("there is a 1 by 1 item at 1.5 0.5")
             .When("you try to add a 1 by 2 item")
