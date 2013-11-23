@@ -31,3 +31,9 @@ And bake for 500 hours
 
     oven.Combine();
     oven.GetComponentInChildren<CanBeCombined>().ingredientName; // => salt pork!
+
+Progress
+--------
+
+Crafting is 100% completed and committed, but inventory layout and management are still up in the air for
+how they should work.
