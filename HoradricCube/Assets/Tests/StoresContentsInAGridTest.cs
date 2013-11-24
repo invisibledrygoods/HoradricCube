@@ -33,6 +33,27 @@ public class StoresContentsInAGridTest : TestBehaviour
             .Then("it should not fit")
             .Because("items cannot be placed in a full inventory");
 
+        Given("it stores its contents in a 4 by 4 grid")
+            .When("you try to add a 1 by 1 item at 1.5 0.5")
+            .Then("it should be added at 1.5 0.5")
+            .Because("items should be added where explicitly specified");
+
+        Given("it stores its contents in a 4 by 4 grid")
+            .When("you try to add a 1 by 1 item at 1.75 0.25")
+            .Then("it should be added at 1.5 0.5")
+            .Because("items should snap to the grid if placed on uneven boundaries");
+
+        Given("it stores its contents in a 4 by 4 grid")
+            .And("there is a 2 by 2 item at 1.0 1.0")
+            .When("you try to add a 1 by 1 item at 0.5 0.5")
+            .Then("it should not fit")
+            .Because("you cannot place an item over another");
+
+        Given("it stores its contents in a 2 by 2 grid")
+            .When("you try to add a 1 by 1 item at 2.5 2.5")
+            .Then("it should not fit")
+            .Because("you cannot place an item outside of the bounds");
+
         Given("it stores its contents in a 2 by 2 grid")
             .And("there is a 1 by 1 item at 0.5 0.5")
             .And("there is a 1 by 1 item at 1.5 0.5")
@@ -83,6 +104,16 @@ public class StoresContentsInAGridTest : TestBehaviour
         item.Require<BoxCollider>();
         item.localScale = new Vector3(width, height, 1.0f);
         success = it.TryToAdd(item);
+        addedAt = item.localPosition;
+        Destroy(item.gameObject);
+    }
+
+    public void YouTryToAddA__By__ItemAt____(int width, int height, float x, float y)
+    {
+        Transform item = new GameObject().transform;
+        item.Require<BoxCollider>();
+        item.localScale = new Vector3(width, height, 1.0f);
+        success = it.TryToAddAt(item, new Vector2(x, y));
         addedAt = item.localPosition;
         Destroy(item.gameObject);
     }

@@ -12,4 +12,9 @@ public class StoresContentsInAGrid : MonoBehaviour
     {
         return false;
     }
+
+    public bool TryToAddAt(Transform item, Vector2 at)
+    {
+        return false;
+    }
 }
