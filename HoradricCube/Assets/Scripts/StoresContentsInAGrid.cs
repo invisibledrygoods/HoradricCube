@@ -6,14 +6,13 @@ using Require;
 public class StoresContentsInAGrid : MonoBehaviour
 {
     public Vector2 size = new Vector2(6, 4);
-    public bool shuffle = false;
 
-    public bool TryToAdd(Transform item)
+    public virtual bool TryToAdd(Transform item)
     {
         return false;
     }
 
-    public bool TryToAddAt(Transform item, Vector2 at)
+    public virtual bool TryToAddAt(Transform item, Vector2 at)
     {
         return false;
     }

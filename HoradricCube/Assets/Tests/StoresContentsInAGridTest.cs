@@ -60,22 +60,7 @@ public class StoresContentsInAGridTest : TestBehaviour
             .When("you try to add a 1 by 2 item")
             .Then("it should not fit")
             .Because("items cannot be placed if shuffle is off and no empty space fits their shape");
-
-        Given("it stores its contents in a 2 by 2 grid")
-            .And("shuffle is turned on")
-            .And("there is a 1 by 1 item at 0.5 0.5")
-            .And("there is a 1 by 1 item at 1.5 0.5")
-            .When("you try to add a 1 by 2 item")
-            .Then("it should fit")
-            .Because("items should rearrange themselves to create space if shuffle is on");
-
-        Given("it stores its contents in a 4 by 4 grid")
-            .And("shuffle is turned on")
-            .And("there is a 2 by 2 item at 1.0 1.0")
-            .And("there is a 2 by 2 item at 3.0 1.0")
-            .When("you try to add a 1 by 3 item")
-            .Then("it should fit")
-            .Because("it should be able to solve difficult knapsack problems");
+        // Split shuffling out into its own class
     }
 
     public void ItStoresItsContentsInA__By__Grid(int columns, int rows)
@@ -91,11 +76,6 @@ public class StoresContentsInAGridTest : TestBehaviour
         item.parent = transform;
         item.localScale = new Vector3(width, height, 1.0f);
         item.localPosition = new Vector3(x, y, 0.0f);
-    }
-
-    public void ShuffleIsTurnedOn()
-    {
-        it.shuffle = true;
     }
 
     public void YouTryToAddA__By__Item(int width, int height)
