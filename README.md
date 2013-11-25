@@ -35,5 +35,7 @@ Bake for 500 hours
 Progress
 --------
 
-Crafting is 100% completed and committed, but inventory layout and management are still up in the air for
-how they should work.
+Crafting is 100% completed.
+Inventory layout and management are designed and tests are written.
+Manual inventory management is at 50%.
+Automatic inventory management is at 0%.
