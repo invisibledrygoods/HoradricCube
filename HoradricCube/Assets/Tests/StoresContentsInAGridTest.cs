@@ -59,7 +59,7 @@ public class StoresContentsInAGridTest : TestBehaviour
             .And("there is a 1 by 1 item at 1.5 0.5")
             .When("you try to add a 1 by 2 item")
             .Then("it should not fit")
-            .Because("items cannot be placed if shuffle is off and no empty space fits their shape");
+            .Because("items cannot be placed if no empty space fits their shape");
         // Split shuffling out into its own class
     }
 
