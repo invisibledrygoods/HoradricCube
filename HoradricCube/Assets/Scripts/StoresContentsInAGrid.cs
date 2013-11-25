@@ -28,11 +28,7 @@ public class StoresContentsInAGrid : MonoBehaviour
     public virtual bool TryToAddAt(Transform item, Vector2 at)
     {
         Vector2 halfSize = item.collider.bounds.size / 2;
-        Vector2 snapTo;
-        
-        at.x = Mathf.Clamp(at.x, halfSize.x, size.x - halfSize.x);
-        at.y = Mathf.Clamp(at.y, halfSize.y, size.y - halfSize.y);
-        snapTo = new Vector2(Mathf.Round(at.x - halfSize.x), Mathf.Round(at.y - halfSize.y)) + halfSize;
+        Vector2 snapTo = new Vector2(Mathf.Round(Mathf.Clamp(at.x, halfSize.x, size.x - halfSize.x) - halfSize.x), Mathf.Round(Mathf.Clamp(at.y, halfSize.y, size.y - halfSize.y) - halfSize.y)) + halfSize;
 
         for (float y = transform.position.y + snapTo.y + 0.5f - halfSize.y; y < transform.position.y + snapTo.y + halfSize.y; y++)
         {
