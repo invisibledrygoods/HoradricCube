@@ -49,10 +49,15 @@ public class StoresContentsInAGridTest : TestBehaviour
             .Then("it should not fit")
             .Because("you cannot place an item over another");
 
-        Given("it stores its contents in a 2 by 2 grid")
-            .When("you try to add a 1 by 1 item at 2.5 2.5")
-            .Then("it should not fit")
-            .Because("you cannot place an item outside of the bounds");
+        Given("it stores its contents in a 4 by 4 grid")
+            .When("you try to add a 1 by 2 item at 2.5 2.5")
+            .Then("it should be added at 0.5 1.0")
+            .Because("items before the bounds snap to inside of the bounds");
+
+        Given("it stores its contents in a 4 by 4 grid")
+            .When("you try to add a 1 by 2 item at 2.5 2.5")
+            .Then("it should be added at 3.5 3.0")
+            .Because("items past the bounds snap to inside of the bounds");
 
         Given("it stores its contents in a 2 by 2 grid")
             .And("there is a 1 by 1 item at 0.5 0.5")
