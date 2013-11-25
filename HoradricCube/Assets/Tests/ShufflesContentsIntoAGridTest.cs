@@ -34,7 +34,7 @@ public class ShufflesContentsIntoAGridTest : TestBehaviour
     public void ItShufflesItsContentsIntoA__By__Grid(int columns, int rows)
     {
         it = transform.Require<ShufflesContentsIntoAGrid>();
-        it.size = new Vector2(columns, rows);
+        it.inventory.size = new Vector2(columns, rows);
     }
 
     public void ThereIsA__By__ItemAt____(int width, int height, float x, float y)

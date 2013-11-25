@@ -50,4 +50,12 @@ public class StoresContentsInAGrid : MonoBehaviour
         item.localPosition = snapTo;
         return true;
     }
+
+    public void clearChildren()
+    {
+        foreach (Transform child in transform)
+        {
+            child.parent = null;
+        }
+    }
 }
