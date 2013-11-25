@@ -60,7 +60,6 @@ public class StoresContentsInAGridTest : TestBehaviour
             .When("you try to add a 1 by 2 item")
             .Then("it should not fit")
             .Because("items cannot be placed if no empty space fits their shape");
-        // Split shuffling out into its own class
     }
 
     public void ItStoresItsContentsInA__By__Grid(int columns, int rows)
