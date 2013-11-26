@@ -9,11 +9,11 @@ public class StoresContentsInAGrid : MonoBehaviour
 
     public virtual bool TryToAdd(Transform item)
     {
-        Vector3 itemSize = item.collider.bounds.size;
+        Vector3 halfSize = item.collider.bounds.size / 2;
 
-        for (float y = itemSize.y / 2; y < size.y - itemSize.y / 2; y++)
+        for (float y = halfSize.y; y < size.y - halfSize.y + 0.4f; y++)
         {
-            for (float x = itemSize.x / 2; x < size.x - itemSize.x / 2; x++)
+            for (float x = halfSize.x; x < size.x - halfSize.x + 0.4f; x++)
             {
                 if (TryToAddAt(item, new Vector2(x, y)))
                 {
@@ -49,13 +49,5 @@ public class StoresContentsInAGrid : MonoBehaviour
         item.parent = transform;
         item.localPosition = snapTo;
         return true;
-    }
-
-    public void clearChildren()
-    {
-        foreach (Transform child in transform)
-        {
-            child.parent = null;
-        }
     }
 }

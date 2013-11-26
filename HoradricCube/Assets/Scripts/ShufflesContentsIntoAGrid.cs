@@ -17,39 +17,44 @@ public class ShufflesContentsIntoAGrid : MonoBehaviour
         List<Transform> itemList;
         List<Transform> originalItemList = new List<Transform>();
 
+        Debug.Log("child count: " + transform.childCount);
+
         foreach (Transform child in transform)
         {
             originalItemList.Add(child);
         }
-        inventory.clearChildren();
+
+        // it doesn't throw a collection modified exception if you do this up there, but it does break
+        foreach (Transform child in originalItemList)
+        {
+            child.parent = null;
+        }
+
         itemList = new List<Transform>(originalItemList);
         itemList.Add(item);
 
-        itemList.Sort(delegate(Transform item1, Transform item2)
+        itemList.Sort((item1, item2) =>
             {
-                float size1 = item1.collider.bounds.size.x * item1.collider.bounds.size.y;
-                float size2 = item2.collider.bounds.size.x * item2.collider.bounds.size.y;
-
-                if (size1 > size2)
-                {
-                    return -1;
-                }
-                else if (size1 == size2)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return 1;
-                }
+                return (int)(item1.collider.bounds.size.magnitude - item2.collider.bounds.size.magnitude);
             }
         );
 
         bool added = false;
 
+        Debug.Log("shuffling " + itemList.Count + " items");
+
         foreach (Transform currentItem in itemList)
         {
+            Debug.Log("there are " + inventory.transform.childCount + " items currently in the inventory");
             added = inventory.TryToAdd(currentItem);
+            if (added)
+            {
+                Debug.Log("added " + currentItem.collider.bounds.size + " at " + currentItem.localPosition);
+            }
+            else
+            {
+                Debug.Log("failed to add " + currentItem.collider.bounds.size);
+            }
 
             if (!added)
             {
@@ -59,7 +64,10 @@ public class ShufflesContentsIntoAGrid : MonoBehaviour
 
         if (!added)
         {
-            inventory.clearChildren();
+            foreach (Transform child in transform)
+            {
+                child.parent = null;
+            }
 
             foreach (Transform currentItem in originalItemList)
             {
