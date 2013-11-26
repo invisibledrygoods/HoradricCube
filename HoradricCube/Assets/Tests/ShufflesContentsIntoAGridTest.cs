@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 using Require;
 using Shouldly;
 
@@ -29,12 +30,20 @@ public class ShufflesContentsIntoAGridTest : TestBehaviour
             .When("you try to add a 1 by 3 item")
             .Then("it should fit")
             .Because("it should be able to solve difficult knapsack problems");
+
+        Given("it shuffles its contents into a 2 by 2 grid")
+            .And("there is a 1 by 2 item at 0.5 1.0")
+            .And("there is a 1 by 1 item at 1.5 0.5")
+            .When("you try to add a 2 by 1 item")
+            .Then("it should contain a 1 by 2 item")
+            .And("it should contain a 1 by 1 item")
+            .Because("failing to add an item should not affect the items already in the inventory");
     }
 
     public void ItShufflesItsContentsIntoA__By__Grid(int columns, int rows)
     {
+        transform.Require<StoresContentsInAGrid>().size = new Vector2(columns, rows);
         it = transform.Require<ShufflesContentsIntoAGrid>();
-        it.inventory.size = new Vector2(columns, rows);
     }
 
     public void ThereIsA__By__ItemAt____(int width, int height, float x, float y)
@@ -63,5 +72,21 @@ public class ShufflesContentsIntoAGridTest : TestBehaviour
     public void ItShouldFit()
     {
         success.ShouldBe(true);
+    }
+
+    public void ItShouldContainA__By__Item(int width, int height)
+    {
+        string children = "";
+        foreach (Transform child in transform)
+        {
+            children += (Vector2)child.collider.bounds.size + " ";
+
+            if ((Vector2)child.collider.bounds.size == new Vector2(width, height))
+            {
+                return;
+            }
+        }
+
+        throw new Exception("inventory should contain a " + width + " by " + height + " item but only contained " + children);
     }
 }

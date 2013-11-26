@@ -5,76 +5,82 @@ using Require;
 
 public class ShufflesContentsIntoAGrid : MonoBehaviour
 {
-    public StoresContentsInAGrid inventory;
+    StoresContentsInAGrid inventory;
 
     public void Awake()
     {
         inventory = transform.Require<StoresContentsInAGrid>();
     }
 
+    public List<T> Shuffle<T>(List<T> list)
+    {
+        List<T> ret = new List<T>();
+
+        while (list.Count != 0)
+        {
+            int index = UnityEngine.Random.Range(0, list.Count);
+            ret.Add(list[index]);
+            list.RemoveAt(index);
+        }
+
+        return ret;
+    }
+
     public bool TryToAdd(Transform item)
     {
-        List<Transform> itemList;
-        List<Transform> originalItemList = new List<Transform>();
+        List<Transform> itemList = new List<Transform>();
+        Dictionary<Transform, Vector3> originalPositions = new Dictionary<Transform, Vector3>();
 
-        Debug.Log("child count: " + transform.childCount);
+        if (inventory.TryToAdd(item))
+        {
+            return true;
+        }
 
         foreach (Transform child in transform)
         {
-            originalItemList.Add(child);
+            originalPositions[child] = child.position;
+            itemList.Add(child);
         }
 
-        // it doesn't throw a collection modified exception if you do this up there, but it does break
-        foreach (Transform child in originalItemList)
+        // try a few shuffles before giving up
+        for (int i = 0; i < 20; i++)
         {
-            child.parent = null;
-        }
-
-        itemList = new List<Transform>(originalItemList);
-        itemList.Add(item);
-
-        itemList.Sort((item1, item2) =>
-            {
-                return (int)(item1.collider.bounds.size.magnitude - item2.collider.bounds.size.magnitude);
-            }
-        );
-
-        bool added = false;
-
-        Debug.Log("shuffling " + itemList.Count + " items");
-
-        foreach (Transform currentItem in itemList)
-        {
-            Debug.Log("there are " + inventory.transform.childCount + " items currently in the inventory");
-            added = inventory.TryToAdd(currentItem);
-            if (added)
-            {
-                Debug.Log("added " + currentItem.collider.bounds.size + " at " + currentItem.localPosition);
-            }
-            else
-            {
-                Debug.Log("failed to add " + currentItem.collider.bounds.size);
-            }
-
-            if (!added)
-            {
-                break;
-            }
-        }
-
-        if (!added)
-        {
-            foreach (Transform child in transform)
+            // it doesn't throw a collection modified exception if you do this up there, but it does break
+            foreach (Transform child in itemList)
             {
                 child.parent = null;
             }
 
-            foreach (Transform currentItem in originalItemList)
+            itemList = Shuffle(itemList);
+
+            itemList.Add(item);
+            itemList.Sort((item1, item2) => (int)((item2.collider.bounds.size.magnitude - item1.collider.bounds.size.magnitude) * 10.0f));
+
+            bool failed = false;
+
+            foreach (Transform currentItem in itemList)
             {
-                inventory.TryToAdd(currentItem);
+                if (!inventory.TryToAdd(currentItem))
+                {
+                    failed = true;
+                    break;
+                }
+            }
+
+            if (failed)
+            {
+                foreach (KeyValuePair<Transform, Vector3> originalPosition in originalPositions)
+                {
+                    originalPosition.Key.position = originalPosition.Value;
+                    originalPosition.Key.parent = transform;
+                }
+            }
+            else
+            {
+                return true;
             }
         }
 
-        return added;
+        return false;
     }
 }
