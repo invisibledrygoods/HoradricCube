@@ -1,8 +1,7 @@
 Horadric Cube
 =============
 
-Work in progress on a Diablo style inventory and crafting system.
-Allowing items that are more than one tile in size might not be a priority though.
+Diablo style inventory and crafting system.
 
 Lets cook some salt pork together
 ---------------------------------
@@ -35,7 +34,4 @@ Bake for 500 hours
 Progress
 --------
 
-- Crafting is 100% completed.
-- Inventory layout and management are designed and tests are written.
-- Manual inventory management is at 50%.
-- Automatic inventory management is at 0%.
+Feature complete. I noticed some weird behaviour where failing to add an item can still accidentally add it even though it returns false. Need to figure out what's going on with that...
